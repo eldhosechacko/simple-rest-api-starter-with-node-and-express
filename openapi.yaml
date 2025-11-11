@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: Simple REST API
+  version: 1.0.0
+  description: A simple modular REST API built with Node.js and Express
+  contact:
+    name: API Support
+
+servers:
+  - url: http://localhost:3000
+    description: Development server
+  - url: https://mvpa1backend-ffbrb6enazgce6a2.southindia-01.azurewebsites.net
+    description: Production server (Azure)
+
+paths:
+  /:
+    get:
+      summary: Welcome endpoint
+      description: Returns a welcome message to confirm API is running
+      operationId: getWelcome
+      tags:
+        - Welcome
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    example: "Welcome to the Simple REST API built with Node and Express!(Udated)"
+
+  /hello/{name}:
+    get:
+      summary: Greet a user by name
+      description: Returns a personalized greeting message
+      operationId: sayHello
+      tags:
+        - Greeting
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: The name of the person to greet
+          schema:
+            type: string
+            minLength: 1
+          example: Eldose
+      responses:
+        '200':
+          description: Successful response with greeting
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    example: "Hello Eldose, welcome to API"
+        '400':
+          description: Bad request - invalid name parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+tags:
+  - name: Welcome
+    description: Welcome and health check endpoints
+  - name: Greeting
+    description: User greeting endpoints
+
+components:
+  schemas:
+    MessageResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Response message
