@@ -1,4 +1,5 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+const path = require('path');
 
 const options = {
   definition: {
@@ -15,10 +16,14 @@ const options = {
       {
         url: 'http://localhost:3000',
         description: 'Development server'
+      },
+      {
+        url: 'https://mvpa1backend-ffbrb6enazgce6a2.southindia-01.azurewebsites.net',
+        description: 'Production server (Azure)'
       }
     ]
   },
-  apis: ['./src/routes/*.js'] // Path to the API docs (JSDoc comments in route files)
+  apis: [path.join(__dirname, './routes/*.js')] // Absolute path to route files
 };
 
 const swaggerSpec = swaggerJsdoc(options);
